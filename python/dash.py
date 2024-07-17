@@ -40,17 +40,17 @@ if st.checkbox('Show raw data'):
 # st.map(filtered_data)
 
 
-df = monsters
-countries = st.multiselect(
-    "Choose countries", list(df.name), []
+names = st.multiselect(
+    "Choose Monster(s)", list(monsters.name), []
 )
-if not countries:
-    st.error("Please select at least one country.")
+if not names:
+    st.error("Please select at least one Monster.")
 else:
-    data = df.loc[name]
-    st.write("### Gross Agricultural Production ($B)", data.sort_index())
+    # st.write(monsters[monsters['name'].isin(names)] )
+    data = monsters[monsters['name'].isin(names)]
+    # st.write(data.sort_index())
 
-    data = data.T.reset_index()
+    data = data.reset_index()
     data = pd.melt(data, id_vars=["index"]).rename(
         columns={"index": "year", "value": "Gross Agricultural Product ($B)"}
     )
